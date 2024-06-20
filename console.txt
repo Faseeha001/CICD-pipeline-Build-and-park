@@ -1,0 +1,160 @@
+Started by user Faseeha
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/CICD-Demo
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Tool Install)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Git checkout)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] git
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/CICD-Demo/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/Faseeha001/CICD-pipeline-Build-and-park.git # timeout=10
+Fetching upstream changes from https://github.com/Faseeha001/CICD-pipeline-Build-and-park.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.43.0'
+ > git fetch --tags --force --progress -- https://github.com/Faseeha001/CICD-pipeline-Build-and-park.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 01d872a7ec0adffd0e26860ebba17d5431277f7e (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 01d872a7ec0adffd0e26860ebba17d5431277f7e # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D main # timeout=10
+ > git checkout -b main 01d872a7ec0adffd0e26860ebba17d5431277f7e # timeout=10
+Commit message: "Update index.jsp"
+ > git rev-list --no-walk 23dcdc0e6e3703bff416a253dce09ccbcd40b82d # timeout=10
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Maven Application)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ mvn clean package
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-------------------------< [0;36min.javahome:hiring[0;1m >-------------------------[m
+[[1;34mINFO[m] [1mBuilding hiring Maven Webapp 0.1[m
+[[1;34mINFO[m] [1m--------------------------------[ war ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:2.5:clean[m [1m(default-clean)[m @ [36mhiring[0;1m ---[m
+[[1;34mINFO[m] Deleting /var/lib/jenkins/workspace/CICD-Demo/target
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:resources[m [1m(default-resources)[m @ [36mhiring[0;1m ---[m
+[[1;33mWARNING[m] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[[1;34mINFO[m] skip non existing resourceDirectory /var/lib/jenkins/workspace/CICD-Demo/src/main/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.1:compile[m [1m(default-compile)[m @ [36mhiring[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:testResources[m [1m(default-testResources)[m @ [36mhiring[0;1m ---[m
+[[1;33mWARNING[m] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[[1;34mINFO[m] skip non existing resourceDirectory /var/lib/jenkins/workspace/CICD-Demo/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.1:testCompile[m [1m(default-testCompile)[m @ [36mhiring[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.12.4:test[m [1m(default-test)[m @ [36mhiring[0;1m ---[m
+[[1;34mINFO[m] No tests to run.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-war-plugin:3.3.1:war[m [1m(default-war)[m @ [36mhiring[0;1m ---[m
+[[1;34mINFO[m] Packaging webapp
+[[1;34mINFO[m] Assembling webapp [hiring] in [/var/lib/jenkins/workspace/CICD-Demo/target/hiring]
+[[1;34mINFO[m] Processing war project
+[[1;34mINFO[m] Copying webapp resources [/var/lib/jenkins/workspace/CICD-Demo/src/main/webapp]
+[[1;34mINFO[m] Building war: /var/lib/jenkins/workspace/CICD-Demo/target/hiring.war
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  1.467 s
+[[1;34mINFO[m] Finished at: 2024-06-20T17:54:51Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Uplaod war file to Nexus)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] nexusArtifactUploader
+Uploading artifact hiring.war started....
+GroupId: in.javahome
+ArtifactId: hiring
+Classifier: 
+Type: war
+Version: 0.1
+File: hiring.war
+Repository:testdemo-app
+Uploading: http://15.157.21.210:8081/repository/testdemo-app/in/javahome/hiring/0.1/hiring-0.1.war
+100 % completed (1.7 kB / 1.7 kB).
+Uploaded: http://15.157.21.210:8081/repository/testdemo-app/in/javahome/hiring/0.1/hiring-0.1.war (1.7 kB at 21 kB/s)
+Uploading artifact hiring.war completed.
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy to Tomcat)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] echo
+****************************************************************
+[Pipeline] echo
+Deploying the application to tomcat server
+[Pipeline] sshagent
+[ssh-agent] Using credentials ubuntu
+[ssh-agent] Looking for ssh-agent implementation...
+[ssh-agent]   Exec ssh-agent (binary ssh-agent on a remote machine)
+$ ssh-agent
+SSH_AUTH_SOCK=/tmp/ssh-a4oTcsJmCm3n/agent.1765
+SSH_AGENT_PID=1768
+Running ssh-add (command line suppressed)
+Identity added: /var/lib/jenkins/workspace/CICD-Demo@tmp/private_key_10513760689554316884.key (/var/lib/jenkins/workspace/CICD-Demo@tmp/private_key_10513760689554316884.key)
+[ssh-agent] Started.
+[Pipeline] {
+[Pipeline] sh
++ scp -o StrictHostKeyChecking=no target/hiring.war ubuntu@3.97.246.105:/opt/Tomcat/webapps
++ ssh -o StrictHostKeyChecking=no ubuntu@3.97.246.105 /opt/Tomcat/bin/shutdown.sh
++ ssh -o StrictHostKeyChecking=no ubuntu@3.97.246.105 /opt/Tomcat/bin/startup.sh
+Tomcat started.
+[Pipeline] }
+$ ssh-agent -k
+unset SSH_AUTH_SOCK;
+unset SSH_AGENT_PID;
+echo Agent pid 1768 killed;
+[ssh-agent] Stopped.
+[Pipeline] // sshagent
+[Pipeline] echo
+Deployed to tomcat server
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
